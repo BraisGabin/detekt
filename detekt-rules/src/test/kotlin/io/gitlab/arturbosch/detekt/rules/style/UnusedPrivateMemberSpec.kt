@@ -494,6 +494,22 @@ class UnusedPrivateMemberSpec : Spek({
             assertThat(subject.lint(code)).hasSize(2)
         }
 
+        it("reports two unused private overloaded functions") {
+            val code = """
+            class Test {
+                private fun unusedFunction(): Int {
+                    return 5
+                }
+
+                private fun unusedFunction(num: Int): Int {
+                    return num
+                }
+            }
+            """
+
+            assertThat(subject.lint(code)).hasSize(2)
+        }
+
         it("does not report function used in interface - #1613") {
             val code = """
                 interface Bar {
