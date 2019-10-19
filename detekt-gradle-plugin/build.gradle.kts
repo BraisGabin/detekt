@@ -26,6 +26,7 @@ val junitPlatformVersion = "1.4.1"
 val assertjVersion = "3.12.2"
 
 dependencies {
+    implementation(files("../detekt-cli/build/libs/detekt-cli-1.1.1-all.jar"))
     implementation(kotlin("stdlib"))
     implementation(kotlin("gradle-plugin"))
     implementation(kotlin("gradle-plugin-api"))

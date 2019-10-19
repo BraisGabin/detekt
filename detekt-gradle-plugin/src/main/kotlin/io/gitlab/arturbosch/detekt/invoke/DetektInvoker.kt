@@ -1,5 +1,7 @@
 package io.gitlab.arturbosch.detekt.invoke
 
+import io.gitlab.arturbosch.detekt.cli.BuildFailure
+import io.gitlab.arturbosch.detekt.cli.buildRunner
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
@@ -45,23 +47,26 @@ private class DefaultCliInvoker(private val project: Project) : DetektInvoker {
 
         project.logger.debug(cliArguments.joinToString(" "))
 
-        val proc = project.javaexec {
-            it.main = DETEKT_MAIN
-            it.classpath = classpath
-            it.args = listOf("@${argsFile.absolutePath}")
-            it.isIgnoreExitValue = true
+        @Suppress("TooGenericExceptionCaught")
+        val exitValue = try {
+            buildRunner(cliArguments.toTypedArray()).execute()
+            0
+        } catch (e: BuildFailure) {
+            // Exit with status code 2 when maxIssues value from configuration was reached.
+            e.printStackTrace()
+            2
+        } catch (e: Exception) {
+            // Exit with status code 1 when an unexpected error occurred.
+            e.printStackTrace()
+            1
         }
-        val exitValue = proc.exitValue
+
         project.logger.debug("Detekt finished with exit value $exitValue")
 
         when (exitValue) {
             1 -> throw GradleException("There was a problem running detekt.")
             2 -> if (!ignoreFailures) throw GradleException("MaxIssues or failThreshold count was reached.")
         }
-    }
-
-    companion object {
-        private const val DETEKT_MAIN = "io.gitlab.arturbosch.detekt.cli.Main"
     }
 }
 
