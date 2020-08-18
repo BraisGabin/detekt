@@ -34,4 +34,9 @@ dependencies {
     implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${Plugins.SONAR}")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:${Plugins.DOKKA}")
     implementation("com.vdurmont:semver4j:${Plugins.SEMVER4J}")
+    constraints {
+        implementation("com.squareup.okhttp3:okhttp:4.8.1") {
+            because("com.github.breadmoirai:github-release and com.autonomousapps.dependency-analysis conflicts")
+        }
+    }
 }

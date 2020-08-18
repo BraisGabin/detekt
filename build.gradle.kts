@@ -7,6 +7,7 @@ plugins {
     id("com.github.johnrengelman.shadow") apply false
     id("com.github.ben-manes.versions")
     id("org.sonarqube")
+    id("com.autonomousapps.dependency-analysis") version "0.56.0"
 }
 
 buildScan {
