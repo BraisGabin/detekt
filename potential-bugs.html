@@ -205,7 +205,7 @@
           
           
           
-          <li><a href="/detekt/configurations.html">detekt Configuration File</a></li>
+          <li><a href="/detekt/configurations.html">Configuration File</a></li>
           
           
           
@@ -226,14 +226,14 @@
           
           
           
-          <li><a href="/detekt/failonbuild.html">Configure Build Failure Thresholds</a></li>
-          
-          
-          
-          
-          
-          
           <li><a href="/detekt/extensions.html">Extending detekt</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a href="/detekt/snapshots.html">Using snapshots</a></li>
           
           
           
@@ -458,8 +458,6 @@ $('#toc').on('click', 'a', function() {
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
 <p><strong>Aliases</strong>: DEPRECATION</p>
@@ -470,8 +468,6 @@ $('#toc').on('click', 'a', function() {
 
 <p>If a when expression contains the same case statement multiple times they should be merged. Otherwise it might be
 easy to miss one of the cases when reading the code, leading to unwanted side effects.</p>
-
-<p><strong>Severity</strong>: Warning</p>
 
 <p><strong>Debt</strong>: 10min</p>
 
@@ -500,8 +496,6 @@ easy to miss one of the cases when reading the code, leading to unwanted side ef
 See the Kotlin documentation for Any.equals(other: Any?):
 https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
 <h4 id="noncompliant-code-1">Noncompliant Code:</h4>
@@ -525,8 +519,6 @@ https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html</p>
 <p>All hash-based collections depend on objects meeting the equals-contract. Two equal objects must produce the
 same hashcode. When inheriting equals or hashcode, override the inherited and call the super method for
 clarification.</p>
-
-<p><strong>Severity</strong>: Defect</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -554,17 +546,49 @@ clarification.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
+<h3 id="exitoutsidemain">ExitOutsideMain</h3>
+
+<p>Flags use of System.exit() and Kotlin’s exitProcess() when used outside of the <code class="language-plaintext highlighter-rouge">main</code> function. This makes code more
+difficult to test, causes unexpected behaviour on Android, and is a poor way to signal a failure in the program. In
+almost all cases it is more appropriate to throw an exception.</p>
+
+<p><strong>Requires Type Resolution</strong></p>
+
+<p><strong>Debt</strong>: 10min</p>
+
+<h4 id="noncompliant-code-3">Noncompliant Code:</h4>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">randomFunction</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">val</span> <span class="py">result</span> <span class="p">=</span> <span class="nf">doWork</span><span class="p">()</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="p">==</span> <span class="nc">FAILURE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">exitProcess</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">exitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="compliant-code-3">Compliant Code:</h4>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">val</span> <span class="py">result</span> <span class="p">=</span> <span class="nf">doWork</span><span class="p">()</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="p">==</span> <span class="nc">FAILURE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">exitProcess</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">exitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 <h3 id="explicitgarbagecollectioncall">ExplicitGarbageCollectionCall</h3>
 
 <p>Reports all calls to explicitly trigger the Garbage Collector.
 Code should work independently of the garbage collector and should not require the GC to be triggered in certain
 points in time.</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
-<h4 id="noncompliant-code-3">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-4">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">System</span><span class="p">.</span><span class="nf">gc</span><span class="p">()</span>
 <span class="nc">Runtime</span><span class="p">.</span><span class="nf">getRuntime</span><span class="p">().</span><span class="nf">gc</span><span class="p">()</span>
@@ -577,18 +601,16 @@ points in time.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Maintainability</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-4">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-5">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span> <span class="p">{</span>
 <span class="k">fun</span> <span class="nf">apiCall</span><span class="p">()</span> <span class="p">=</span> <span class="nc">System</span><span class="p">.</span><span class="nf">getProperty</span><span class="p">(</span><span class="s">"propertyName"</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-3">Compliant Code:</h4>
+<h4 id="compliant-code-4">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Person</span> <span class="p">{</span>
 <span class="k">fun</span> <span class="nf">apiCall</span><span class="p">():</span> <span class="nc">String</span> <span class="p">=</span> <span class="nc">System</span><span class="p">.</span><span class="nf">getProperty</span><span class="p">(</span><span class="s">"propertyName"</span><span class="p">)</span>
@@ -605,8 +627,6 @@ normally so that’s the rationale behind this rule.</p>
 fun returnsNoValue() {}</p>
 
 <p><strong>Requires Type Resolution</strong></p>
-
-<p><strong>Severity</strong>: Defect</p>
 
 <p><strong>Debt</strong>: 20min</p>
 
@@ -625,12 +645,12 @@ fun returnsNoValue() {}</p>
   </li>
 </ul>
 
-<h4 id="noncompliant-code-5">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-6">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">return</span><span class="nf">sValue</span><span class="p">()</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-4">Compliant Code:</h4>
+<h4 id="compliant-code-5">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">if</span> <span class="p">(</span><span class="mi">42</span> <span class="p">==</span> <span class="k">return</span><span class="nf">sValue</span><span class="p">())</span> <span class="p">{}</span>
     <span class="kd">val</span> <span class="py">x</span> <span class="p">=</span> <span class="k">return</span><span class="nf">sValue</span><span class="p">()</span>
@@ -646,11 +666,9 @@ For example, if locale with tag <code class="language-plaintext highlighter-roug
 will be evaluated to numbers consisting of Eastern-Arabic (non-ASCII) digits.
 [java.util.Locale.US] is recommended for machine-readable output.</p>
 
-<p><strong>Severity</strong>: CodeSmell</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-6">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-7">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="s">"Timestamp: %d"</span><span class="p">,</span> <span class="nc">System</span><span class="p">.</span><span class="nf">currentTimeMillis</span><span class="p">())</span>
 
@@ -659,7 +677,7 @@ will be evaluated to numbers consisting of Eastern-Arabic (non-ASCII) digits.
 <span class="n">str</span><span class="p">.</span><span class="nf">toLowerCase</span><span class="p">()</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-5">Compliant Code:</h4>
+<h4 id="compliant-code-6">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span><span class="p">.</span><span class="nf">format</span><span class="p">(</span><span class="nc">Locale</span><span class="p">.</span><span class="nc">US</span><span class="p">,</span> <span class="s">"Timestamp: %d"</span><span class="p">,</span> <span class="nc">System</span><span class="p">.</span><span class="nf">currentTimeMillis</span><span class="p">())</span>
 
@@ -676,8 +694,6 @@ This may lead to backward incompatibility.
 Use a block statement to make clear this function will never return a value.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
-
-<p><strong>Severity</strong>: Defect</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -712,11 +728,9 @@ fun safeUnitReturn(): Unit = println("Hello Unit")
 This might be a bug if it is used for instance as a loop condition. This loop will never be triggered then.
 This might be due to invalid ranges like (10..9) which will cause the loop to never be entered.</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 10min</p>
 
-<h4 id="noncompliant-code-7">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-8">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">2</span><span class="o">..</span><span class="mi">1</span><span class="p">)</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">1</span> <span class="n">downTo</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{}</span>
@@ -725,7 +739,7 @@ This might be due to invalid ranges like (10..9) which will cause the loop to ne
 <span class="kd">val</span> <span class="py">range2</span> <span class="p">=</span> <span class="mi">2</span> <span class="n">until</span> <span class="mi">2</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-6">Compliant Code:</h4>
+<h4 id="compliant-code-7">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">2</span><span class="o">..</span><span class="mi">2</span><span class="p">)</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">2</span> <span class="n">downTo</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{}</span>
@@ -739,11 +753,9 @@ This might be due to invalid ranges like (10..9) which will cause the loop to ne
 The hasNext() method of an Iterator implementation should not have any side effects.
 This rule reports implementations that call the next() method of the Iterator inside the hasNext() method.</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 10min</p>
 
-<h4 id="noncompliant-code-8">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-9">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MyIterator</span> <span class="p">:</span> <span class="nc">Iterator</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;</span> <span class="p">{</span>
 
@@ -761,11 +773,9 @@ NoSuchElementException.</p>
 
 <p>See: https://docs.oracle.com/javase/7/docs/api/java/util/Iterator.html#next()</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 10min</p>
 
-<h4 id="noncompliant-code-9">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-10">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MyIterator</span> <span class="p">:</span> <span class="nc">Iterator</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;</span> <span class="p">{</span>
 
@@ -775,7 +785,7 @@ NoSuchElementException.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-7">Compliant Code:</h4>
+<h4 id="compliant-code-8">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MyIterator</span> <span class="p">:</span> <span class="nc">Iterator</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;</span> <span class="p">{</span>
 
@@ -795,8 +805,6 @@ NoSuchElementException.</p>
 <p>Using lateinit for property initialization can be error prone and the actual initialization is not
 guaranteed. Try using constructor injection or delegation to initialize properties.</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
 <h4 id="configuration-options-2">Configuration options:</h4>
@@ -815,7 +823,7 @@ this check.</p>
   </li>
 </ul>
 
-<h4 id="noncompliant-code-10">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-11">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Foo</span> <span class="p">{</span>
     <span class="nd">@JvmField</span> <span class="k">lateinit</span> <span class="kd">var</span> <span class="py">i1</span><span class="p">:</span> <span class="nc">Int</span>
@@ -831,11 +839,9 @@ Preferred access methods are <code class="language-plaintext highlighter-rouge">
 
 <p>Based on an IntelliJ IDEA inspection MapGetWithNotNullAssertionOperatorInspection.</p>
 
-<p><strong>Severity</strong>: CodeSmell</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-11">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-12">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">map</span> <span class="p">=</span> <span class="n">emptyMap</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">,</span> <span class="nc">String</span><span class="p">&gt;()</span>
 <span class="n">map</span><span class="p">[</span><span class="s">"key"</span><span class="p">]</span><span class="o">!!</span>
@@ -844,7 +850,7 @@ Preferred access methods are <code class="language-plaintext highlighter-rouge">
 <span class="n">map</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="s">"key"</span><span class="p">)</span><span class="o">!!</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-8">Compliant Code:</h4>
+<h4 id="compliant-code-9">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">map</span> <span class="p">=</span> <span class="n">emptyMap</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">,</span> <span class="nc">String</span><span class="p">&gt;()</span>
 <span class="n">map</span><span class="p">[</span><span class="s">"key"</span><span class="p">]</span>
@@ -869,8 +875,6 @@ either handle all cases or use a default <code class="language-plaintext highlig
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
 <h4 id="configuration-options-3">Configuration options:</h4>
@@ -883,7 +887,7 @@ either handle all cases or use a default <code class="language-plaintext highlig
   </li>
 </ul>
 
-<h4 id="noncompliant-code-12">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-13">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="kd">class</span> <span class="nc">Color</span> <span class="p">{</span>
     <span class="nc">RED</span><span class="p">,</span>
@@ -899,7 +903,7 @@ either handle all cases or use a default <code class="language-plaintext highlig
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-9">Compliant Code:</h4>
+<h4 id="compliant-code-10">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="kd">class</span> <span class="nc">Color</span> <span class="p">{</span>
     <span class="nc">RED</span><span class="p">,</span>
@@ -929,11 +933,9 @@ either handle all cases or use a default <code class="language-plaintext highlig
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-13">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-14">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nc">Any</span><span class="p">?):</span> <span class="nc">String</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span>
@@ -944,7 +946,7 @@ either handle all cases or use a default <code class="language-plaintext highlig
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-10">Compliant Code:</h4>
+<h4 id="compliant-code-11">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">foo</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nc">Any</span><span class="p">?):</span> <span class="nc">String</span> <span class="p">{</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">?.</span><span class="nf">toString</span><span class="p">()</span> <span class="o">?:</span> <span class="s">"-"</span>
@@ -962,11 +964,9 @@ verified that all cases are already covered when checking cases on an enum or se
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Warning</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-14">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-15">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="kd">class</span> <span class="nc">Color</span> <span class="p">{</span>
     <span class="nc">RED</span><span class="p">,</span>
@@ -984,7 +984,7 @@ verified that all cases are already covered when checking cases on an enum or se
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-11">Compliant Code:</h4>
+<h4 id="compliant-code-12">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">enum</span> <span class="kd">class</span> <span class="nc">Color</span> <span class="p">{</span>
     <span class="nc">RED</span><span class="p">,</span>
@@ -1015,16 +1015,14 @@ verified that all cases are already covered when checking cases on an enum or se
 This implies that the loop is only executed once and thus could be rewritten without a
 loop altogether.</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 10min</p>
 
-<h4 id="noncompliant-code-15">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-16">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">)</span> <span class="k">break</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-12">Compliant Code:</h4>
+<h4 id="compliant-code-13">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="p">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">break</span>
@@ -1037,17 +1035,15 @@ loop altogether.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-16">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-17">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">a</span> <span class="p">=</span> <span class="mi">1</span>
 <span class="kd">val</span> <span class="py">b</span> <span class="p">=</span> <span class="n">a</span><span class="o">!!</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-13">Compliant Code:</h4>
+<h4 id="compliant-code-14">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">a</span> <span class="p">=</span> <span class="mi">1</span>
 <span class="kd">val</span> <span class="py">b</span> <span class="p">=</span> <span class="n">a</span>
@@ -1059,17 +1055,15 @@ loop altogether.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
-<h4 id="noncompliant-code-17">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-18">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">a</span><span class="p">:</span> <span class="nc">String</span> <span class="p">=</span> <span class="s">""</span>
 <span class="kd">val</span> <span class="py">b</span> <span class="p">=</span> <span class="n">someValue</span><span class="o">?.</span><span class="n">length</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-14">Compliant Code:</h4>
+<h4 id="compliant-code-15">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">a</span><span class="p">:</span> <span class="nc">String</span><span class="p">?</span> <span class="p">=</span> <span class="k">null</span>
 <span class="kd">val</span> <span class="py">b</span> <span class="p">=</span> <span class="n">someValue</span><span class="o">?.</span><span class="n">length</span>
@@ -1083,11 +1077,9 @@ This unreachable code should be removed as it serves no purpose.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Warning</p>
-
 <p><strong>Debt</strong>: 10min</p>
 
-<h4 id="noncompliant-code-18">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-19">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">break</span>
@@ -1111,18 +1103,16 @@ null safety. Guard the code appropriately to prevent NullPointerExceptions.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
-<h4 id="noncompliant-code-19">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-20">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">foo</span><span class="p">(</span><span class="n">str</span><span class="p">:</span> <span class="nc">String</span><span class="p">?)</span> <span class="p">{</span>
     <span class="nf">println</span><span class="p">(</span><span class="n">str</span><span class="o">!!</span><span class="p">.</span><span class="n">length</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-15">Compliant Code:</h4>
+<h4 id="compliant-code-16">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">foo</span><span class="p">(</span><span class="n">str</span><span class="p">:</span> <span class="nc">String</span><span class="p">?)</span> <span class="p">{</span>
     <span class="nf">println</span><span class="p">(</span><span class="n">str</span><span class="o">?.</span><span class="n">length</span><span class="p">)</span>
@@ -1135,13 +1125,11 @@ null safety. Guard the code appropriately to prevent NullPointerExceptions.</p>
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
 <p><strong>Aliases</strong>: UNCHECKED_CAST</p>
 
-<h4 id="noncompliant-code-20">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-21">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">foo</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nc">String</span><span class="p">)</span> <span class="p">{</span>
     <span class="nf">println</span><span class="p">(</span><span class="n">s</span> <span class="k">as</span> <span class="nc">Int</span><span class="p">)</span>
@@ -1152,7 +1140,7 @@ null safety. Guard the code appropriately to prevent NullPointerExceptions.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-16">Compliant Code:</h4>
+<h4 id="compliant-code-17">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fun</span> <span class="nf">foo</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nc">Any</span><span class="p">)</span> <span class="p">{</span>
     <span class="nf">println</span><span class="p">(</span><span class="n">s</span> <span class="k">as</span> <span class="nc">Int</span><span class="p">)</span>
@@ -1165,11 +1153,9 @@ null safety. Guard the code appropriately to prevent NullPointerExceptions.</p>
 This leads to confusion as a reader of the code might think the value will be incremented/decremented.
 However the value is replaced with the original value which might lead to bugs.</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 20min</p>
 
-<h4 id="noncompliant-code-21">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-22">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="py">i</span> <span class="p">=</span> <span class="mi">0</span>
 <span class="n">i</span> <span class="p">=</span> <span class="n">i--</span>
@@ -1183,7 +1169,7 @@ However the value is replaced with the original value which might lead to bugs.<
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-17">Compliant Code:</h4>
+<h4 id="compliant-code-18">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="py">i</span> <span class="p">=</span> <span class="mi">0</span>
 <span class="n">i--</span>
@@ -1204,11 +1190,9 @@ However the value is replaced with the original value which might lead to bugs.<
 Correct implementations of the equals() method should only take in a parameter of type Any?
 See: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html</p>
 
-<p><strong>Severity</strong>: Defect</p>
-
 <p><strong>Debt</strong>: 10min</p>
 
-<h4 id="noncompliant-code-22">Noncompliant Code:</h4>
+<h4 id="noncompliant-code-23">Noncompliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Foo</span> <span class="p">{</span>
 
@@ -1218,7 +1202,7 @@ See: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h4 id="compliant-code-18">Compliant Code:</h4>
+<h4 id="compliant-code-19">Compliant Code:</h4>
 
 <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Foo</span> <span class="p">{</span>
 
@@ -1243,8 +1227,8 @@ See: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/equals.html</p>
 <footer>
             <div class="row">
                 <div class="col-lg-12 footer">
-               &copy;2020 The detekt Team. All rights reserved. <br />
- Site last generated: Dec 19, 2020 <br />
+               &copy;2021 The detekt Team. All rights reserved. <br />
+ Site last generated: Jan 21, 2021 <br />
                 </div>
             </div>
 </footer>

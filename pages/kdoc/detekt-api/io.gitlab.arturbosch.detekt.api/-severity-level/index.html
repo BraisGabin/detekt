@@ -5,8 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
-<meta name="keywords" content=" build fail thresholds">
-<title>Configure Build Failure Thresholds | A static code analyzer for Kotlin</title>
+<meta name="keywords" content=" ">
+<title>SeverityLevel - | A static code analyzer for Kotlin</title>
 <link rel="stylesheet" href="/detekt/css/syntax.css">
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -148,7 +148,7 @@
                                 searchInput: document.getElementById('search-input'),
                                 resultsContainer: document.getElementById('results-container'),
                                 dataSource: '/detekt/search.json',
-                                searchResultTemplate: '<li><a href="{url}" title="Configure Build Failure Thresholds">{title}</a></li>',
+                                searchResultTemplate: '<li><a href="{url}" title="SeverityLevel -">{title}</a></li>',
                     noResultsText: 'No results found.',
                             limit: 10,
                             fuzzy: true,
@@ -205,7 +205,7 @@
           
           
           
-          <li><a href="/detekt/configurations.html">detekt Configuration File</a></li>
+          <li><a href="/detekt/configurations.html">Configuration File</a></li>
           
           
           
@@ -226,14 +226,14 @@
           
           
           
-          <li class="active"><a href="/detekt/failonbuild.html">Configure Build Failure Thresholds</a></li>
-          
-          
-          
-          
-          
-          
           <li><a href="/detekt/extensions.html">Extending detekt</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a href="/detekt/snapshots.html">Using snapshots</a></li>
           
           
           
@@ -406,7 +406,7 @@
         <!-- Content Column -->
         <div class="col-md-9" id="tg-sb-content">
             <div class="post-header">
-   <h1 class="post-title-main">Configure Build Failure Thresholds</h1>
+   <h1 class="post-title-main">SeverityLevel -</h1>
 </div>
 
 
@@ -443,30 +443,106 @@ $('#toc').on('click', 'a', function() {
 
     
 
-    <a target="_blank" href="https://github.com/detekt/detekt/tree/master/docs/pages//failonbuild.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
+    <a target="_blank" href="https://github.com/detekt/detekt/tree/master/docs/pages//pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/.md" class="btn btn-default githubEditButton" role="button"><i class="fa fa-github fa-lg"></i> Edit me</a>
 
     
 
 
     
 
-  <p><em>detekt</em> supports the option to fail your build if a threshold of code smell issues is met.</p>
+  <p>//<a href="/detekt/pages/kdoc/detekt-api/">detekt-api</a>/<a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/">io.gitlab.arturbosch.detekt.api</a>/<a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/">SeverityLevel</a></p>
 
-<p>For this the following code must be inside the detekt config:</p>
+<h1 id="severitylevel">SeverityLevel</h1>
+<p>[jvm]</p>
 
-<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">build</span><span class="pi">:</span>
-  <span class="na">maxIssues</span><span class="pi">:</span> <span class="m">10</span> <span class="c1"># break the build if ten weighted issues are found</span>
-  <span class="na">weights</span><span class="pi">:</span>
-    <span class="na">complexity</span><span class="pi">:</span> <span class="m">2</span> <span class="c1"># every rule of the complexity rule set should count as if two issues were found...</span>
-    <span class="na">LongParameterList</span><span class="pi">:</span> <span class="m">1</span> <span class="c1"># ...with the exception of the LongParameterList rule.</span>
-    <span class="na">comments</span><span class="pi">:</span> <span class="m">0</span> <span class="c1"># comment rules are just a nice to know?!</span>
-</code></pre></div></div>
+<p>The severity level for each <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-issue/">Issue</a>. This will be printed to the output, such as XML or Sarif.</p>
 
-<p>Every rule and rule set can be attached with an integer value which is the weight of the finding.
-For example: If you have 5 findings of the category <em>complexity</em>, then your failThreshold of 10 is reached as
-5 x 2 = 10.</p>
+<p>In the future, this will be used to determine the process result and reports.</p>
 
-<p>The formula for weights is: RuleID &gt; RuleSetID &gt; 1.</p>
+<p>enum <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/">SeverityLevel</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/">SeverityLevel</a>&gt;</p>
+
+<h2 id="entries">Entries</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-e-r-r-o-r/">ERROR</a></td>
+      <td>[jvm] <br /><br />Fail the cli process or gradle task.<br /><br /><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-e-r-r-o-r/">ERROR</a>()  <br />  <br />   <br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-w-a-r-n-i-n-g/">WARNING</a></td>
+      <td>[jvm] <br /><br />Report issue and contribute to the total count, but does not fail cli process or gradle task.<br /><br /><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-w-a-r-n-i-n-g/">WARNING</a>()  <br />  <br />   <br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/">INFO</a></td>
+      <td>[jvm] <br /><br />Report issue, does not contribute to the count.<br /><br /><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/">INFO</a>()  <br />  <br />   <br /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="functions">Functions</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/compareTo/#io.gitlab.arturbosch.detekt.api.SeverityLevel/PointingToDeclaration/">compareTo</a></td>
+      <td>[jvm]  <br />Content  <br />operator override fun <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/compareTo/#io.gitlab.arturbosch.detekt.api.SeverityLevel/PointingToDeclaration/">compareTo</a>(other: <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/">SeverityLevel</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>  <br /><br /><br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/equals/#kotlin.Any?/PointingToDeclaration/">equals</a></td>
+      <td>[jvm]  <br />Content  <br />operator override fun <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/equals/#kotlin.Any?/PointingToDeclaration/">equals</a>(other: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>?): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>  <br /><br /><br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/finalize/#/PointingToDeclaration/">finalize</a></td>
+      <td>[jvm]  <br />Content  <br />override fun <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/finalize/#/PointingToDeclaration/">finalize</a>()  <br /><br /><br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/getDeclaringClass/#/PointingToDeclaration/">getDeclaringClass</a></td>
+      <td>[jvm]  <br />Content  <br />override fun <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/getDeclaringClass/#/PointingToDeclaration/">getDeclaringClass</a>(): <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html">Class</a>&lt;<a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/">SeverityLevel</a>&gt;  <br /><br /><br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/hashCode/#/PointingToDeclaration/">hashCode</a></td>
+      <td>[jvm]  <br />Content  <br />override fun <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/hashCode/#/PointingToDeclaration/">hashCode</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>  <br /><br /><br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/toString/#/PointingToDeclaration/">toString</a></td>
+      <td>[jvm]  <br />Content  <br />open override fun <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/-i-n-f-o/#kotlin/Enum/toString/#/PointingToDeclaration/">toString</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>  <br /><br /><br /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="properties">Properties</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/#io.gitlab.arturbosch.detekt.api/SeverityLevel/name/#/PointingToDeclaration/">name</a></td>
+      <td>[jvm] override val <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/#io.gitlab.arturbosch.detekt.api/SeverityLevel/name/#/PointingToDeclaration/">name</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>   <br /></td>
+    </tr>
+    <tr>
+      <td><a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/#io.gitlab.arturbosch.detekt.api/SeverityLevel/ordinal/#/PointingToDeclaration/">ordinal</a></td>
+      <td>[jvm] override val <a href="/detekt/pages/kdoc/detekt-api/io.gitlab.arturbosch.detekt.api/-severity-level/#io.gitlab.arturbosch.detekt.api/SeverityLevel/ordinal/#/PointingToDeclaration/">ordinal</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>   <br /></td>
+    </tr>
+  </tbody>
+</table>
 
 
 
@@ -484,8 +560,8 @@ For example: If you have 5 findings of the category <em>complexity</em>, then yo
 <footer>
             <div class="row">
                 <div class="col-lg-12 footer">
-               &copy;2020 The detekt Team. All rights reserved. <br />
- Site last generated: Dec 19, 2020 <br />
+               &copy;2021 The detekt Team. All rights reserved. <br />
+ Site last generated: Jan 21, 2021 <br />
                 </div>
             </div>
 </footer>

@@ -205,7 +205,7 @@
           
           
           
-          <li><a href="/detekt/configurations.html">detekt Configuration File</a></li>
+          <li><a href="/detekt/configurations.html">Configuration File</a></li>
           
           
           
@@ -226,14 +226,14 @@
           
           
           
-          <li><a href="/detekt/failonbuild.html">Configure Build Failure Thresholds</a></li>
-          
-          
-          
-          
-          
-          
           <li><a href="/detekt/extensions.html">Extending detekt</a></li>
+          
+          
+          
+          
+          
+          
+          <li><a href="/detekt/snapshots.html">Using snapshots</a></li>
           
           
           
@@ -456,8 +456,6 @@ $('#toc').on('click', 'a', function() {
 
 <p>Reports when class or object names which do not follow the specified naming convention are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <p><strong>Aliases</strong>: ClassName</p>
@@ -475,8 +473,6 @@ $('#toc').on('click', 'a', function() {
 <h3 id="constructorparameternaming">ConstructorParameterNaming</h3>
 
 <p>Reports constructor parameter names which do not follow the specified naming convention are used.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -509,8 +505,6 @@ $('#toc').on('click', 'a', function() {
 
 <p>Reports when enum names which do not follow the specified naming convention are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-2">Configuration options:</h4>
@@ -529,8 +523,6 @@ $('#toc').on('click', 'a', function() {
 By default this rule does not report any classes.
 Examples for forbidden names might be too generic class names like <code class="language-plaintext highlighter-rouge">...Manager</code>.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-3">Configuration options:</h4>
@@ -547,8 +539,6 @@ Examples for forbidden names might be too generic class names like <code class="
 
 <p>Reports when very long function names are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-4">Configuration options:</h4>
@@ -564,8 +554,6 @@ Examples for forbidden names might be too generic class names like <code class="
 <h3 id="functionminlength">FunctionMinLength</h3>
 
 <p>Reports when very short function names are used.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -584,8 +572,6 @@ Examples for forbidden names might be too generic class names like <code class="
 <p>Reports when function names which do not follow the specified naming convention are used.
 One exception are factory functions used to create instances of classes.
 These factory functions can have the same name as the class being created.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -621,8 +607,6 @@ annotation class names</p>
 
 <p>Reports function parameter names which do not follow the specified naming convention are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-7">Configuration options:</h4>
@@ -656,8 +640,6 @@ annotation class names</p>
 
 <p>Reports when the package declaration is missing or the file location does not match the declared package.</p>
 
-<p><strong>Severity</strong>: Maintainability</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-8">Configuration options:</h4>
@@ -682,8 +664,6 @@ Use camel humps with an uppercase first letter (e.g. ProcessDeclarations.kt).</p
 Therefore, you should avoid using meaningless words such as “Util” in file names.” - Official Kotlin Style Guide</p>
 
 <p>More information at: http://kotlinlang.org/docs/reference/coding-conventions.html</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -720,8 +700,6 @@ Therefore, you should avoid using meaningless words such as “Util” in file n
 This might result in confusion.
 The member should either be renamed or changed to a constructor.
 Factory functions that create an instance of the class are exempt from this rule.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -775,8 +753,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 
 <p><strong>Requires Type Resolution</strong></p>
 
-<p><strong>Severity</strong>: Warning</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="noncompliant-code-2">Noncompliant Code:</h4>
@@ -792,8 +768,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 <h3 id="objectpropertynaming">ObjectPropertyNaming</h3>
 
 <p>Reports when property names inside objects which do not follow the specified naming convention are used.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -821,8 +795,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 
 <p>Reports when package names which do not follow the specified naming convention are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <p><strong>Aliases</strong>: PackageDirectoryMismatch</p>
@@ -840,8 +812,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 <h3 id="toplevelpropertynaming">TopLevelPropertyNaming</h3>
 
 <p>Reports when top level constant names which do not follow the specified naming convention are used.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -869,8 +839,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 
 <p>Reports when very long variable names are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-14">Configuration options:</h4>
@@ -887,8 +855,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 
 <p>Reports when very short variable names are used.</p>
 
-<p><strong>Severity</strong>: Style</p>
-
 <p><strong>Debt</strong>: 5min</p>
 
 <h4 id="configuration-options-15">Configuration options:</h4>
@@ -904,8 +870,6 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 <h3 id="variablenaming">VariableNaming</h3>
 
 <p>Reports when variable names which do not follow the specified naming convention are used.</p>
-
-<p><strong>Severity</strong>: Style</p>
 
 <p><strong>Debt</strong>: 5min</p>
 
@@ -949,8 +913,8 @@ Please check the <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-
 <footer>
             <div class="row">
                 <div class="col-lg-12 footer">
-               &copy;2020 The detekt Team. All rights reserved. <br />
- Site last generated: Dec 19, 2020 <br />
+               &copy;2021 The detekt Team. All rights reserved. <br />
+ Site last generated: Jan 21, 2021 <br />
                 </div>
             </div>
 </footer>
